@@ -14,12 +14,12 @@ class HTMLLinkParser(HTMLParser):
 
     def handle_starttag(self, tag, attrs):
         if tag == "a":
-            link={}
+            link = {}
             for (name, value) in attrs:
-                link[name]=value
+                link[name] = value
             self.links.append(link)
 
-parser = HTMLLinkParser()
+PARSER = HTMLLinkParser()
 
 def check_for_success():
 
@@ -34,8 +34,8 @@ def check_for_success():
     html = req.read()
     if html != 'success\n': # Success!
         print "!SUCCESS: {} {} [{}]".format(req.getcode(), req.geturl(), len(html))
-        parser.feed(html)
-        for link in parser.links:
+        PARSER.feed(html)
+        for link in PARSER.links:
             if link['id'] == 'continue_link':
                 try:
                     req = opener.open(link['href'])
