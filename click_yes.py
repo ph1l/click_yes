@@ -25,15 +25,23 @@ def check_for_success():
 
     # Setup our HTTP Client
     opener = urllib2.build_opener(urllib2.HTTPCookieProcessor())
+    try:
+        req = opener.open(CHECK_URL)
+    except urllib2.URLError, err:
+        print "!!ERROR : {} {} {}".format('ERR', CHECK_URL, str(err))
+        return
 
-    req = opener.open(CHECK_URL)
     html = req.read()
     if html != 'success\n': # Success!
         print "!SUCCESS: {} {} [{}]".format(req.getcode(), req.geturl(), len(html))
         parser.feed(html)
         for link in parser.links:
             if link['id'] == 'continue_link':
-                req = opener.open(link['href'])
+                try:
+                    req = opener.open(link['href'])
+                except urllib2.URLError, err:
+                    print "!!ERROR : {} {} {}".format('ERR', link['href'], str(err))
+                    return
                 html = req.read()
                 print "CONTINUE:{} {} [{}]".format(req.getcode(), req.geturl(), len(html))
 
