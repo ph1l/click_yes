@@ -1,5 +1,10 @@
 #!/usr/bin/python -u
+"""
+click_yes.py
 
+a script to accept the license agreement to the wifi network on an
+ongoing and automated basis. ;-)
+"""
 import time
 import urllib2
 
@@ -9,7 +14,13 @@ CHECK_URL = "http://detectportal.firefox.com/success.txt"
 CHECK_CONTENT = "success\n"
 
 class HTMLLinkParser(HTMLParser):
+    """
+    This HTMLParser sub-class finds all anchors on the fed html so
+    we can look for the continue_link.
 
+    this method has a public attribute `links`, a list of dictionaries
+    of attributes.
+    """
     links = []
 
     def handle_starttag(self, tag, attrs):
@@ -22,6 +33,11 @@ class HTMLLinkParser(HTMLParser):
 PARSER = HTMLLinkParser()
 
 def check_for_success():
+    """
+    This function attempts to load a known URL and verify internet
+    access. When appropriate, it searches for the `continue_link`
+    and clicks it.
+    """
 
     # Setup our HTTP Client
     opener = urllib2.build_opener(urllib2.HTTPCookieProcessor())
@@ -48,6 +64,9 @@ def check_for_success():
     opener.close()
 
 def main():
+    """
+    void main()
+    """
     while True:
         check_for_success()
         time.sleep(90)
