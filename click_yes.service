@@ -1,0 +1,9 @@
+[Unit]
+Description=Click Yes
+
+[Service]
+Type=simple
+ExecStart=/usr/local/sbin/click_yes.py
+
+[Install]
+WantedBy=multi-user.target
