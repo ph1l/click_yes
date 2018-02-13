@@ -4,6 +4,8 @@ Description=Click Yes
 [Service]
 Type=simple
 ExecStart=/usr/local/sbin/click_yes.py
+RestartSec=60s # restart after one minute
+Restart=always
 
 [Install]
 WantedBy=multi-user.target
