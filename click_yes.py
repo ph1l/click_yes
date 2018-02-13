@@ -62,6 +62,9 @@ def check_for_success():
     except urllib2.URLError, err:
         print "!!ERROR : {} {} {}".format('ERR', CHECK_URL, str(err))
         return
+    except socket.error, err:
+        print "!!ERROR : {} {} {}".format('ERR', CHECK_URL, str(err))
+        return
 
     html = req.read()
     if html != 'success\n': # Success!
